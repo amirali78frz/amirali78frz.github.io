@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amir Ali Farzin | AI Researcher</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0a1628;
+    --accent: #4a9eff;
+    --accent-soft: #7abfff;
+    --gold: #f0c060;
+    --text: #e8edf5;
+    --text-muted: #8ba4c8;
+    --text-dim: #4a6490;
+    --surface: rgba(26, 58, 107, 0.15);
+    --surface-hover: rgba(74, 158, 255, 0.08);
+    --border: rgba(74, 158, 255, 0.18);
+    --border-strong: rgba(74, 158, 255, 0.35);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'DM Sans', sans-serif; background-color: var(--navy); color: var(--text); overflow-x: hidden; line-height: 1.7; }
+  body::before {
+    content: ''; position: fixed; inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 20% 10%, rgba(26,58,107,0.5) 0%, transparent 60%), radial-gradient(ellipse 60% 40% at 80% 80%, rgba(10,30,80,0.6) 0%, transparent 55%), linear-gradient(180deg, #060e1f 0%, #0a1628 40%, #080f1e 100%);
+    z-index: -2; pointer-events: none;
+  }
+  body::after {
+    content: ''; position: fixed; inset: 0;
+    background-image: linear-gradient(rgba(74,158,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(74,158,255,0.03) 1px, transparent 1px);
+    background-size: 60px 60px; z-index: -1; pointer-events: none;
+  }
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 18px 60px; background: rgba(6,14,31,0.82); backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border); transition: all 0.3s;
+  }
+  .nav-logo { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--accent); letter-spacing: 0.08em; text-decoration: none; }
+  .nav-links { display: flex; gap: 36px; list-style: none; }
+  .nav-links a { color: var(--text-muted); text-decoration: none; font-size: 13px; font-weight: 500; letter-spacing: 0.05em; text-transform: uppercase; transition: color 0.2s; position: relative; }
+  .nav-links a::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 1px; background: var(--accent); transition: width 0.3s; }
+  .nav-links a:hover { color: var(--accent); }
+  .nav-links a:hover::after { width: 100%; }
+  section { max-width: 1100px; margin: 0 auto; padding: 100px 60px; }
+  #hero { min-height: 100vh; display: flex; align-items: center; gap: 80px; padding-top: 140px; }
+  .hero-text { flex: 1; }
+  .hero-tag {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(74,158,255,0.1); border: 1px solid var(--border); border-radius: 2px;
+    padding: 6px 14px; font-family: 'JetBrains Mono', monospace; font-size: 11px;
+    color: var(--accent); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 28px;
+  }
+  .hero-tag::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.5;transform:scale(.8)} }
+  .hero-name { font-family: 'DM Serif Display', serif; font-size: clamp(42px,5vw,68px); line-height: 1.05; color: var(--text); margin-bottom: 16px; }
+  .hero-name em { font-style: italic; color: var(--accent-soft); }
+  .hero-title { font-size: 17px; color: var(--text-muted); font-weight: 400; margin-bottom: 28px; letter-spacing: 0.01em; }
+  .hero-desc { font-size: 15px; color: var(--text-muted); max-width: 560px; margin-bottom: 40px; line-height: 1.8; }
+  .hero-buttons { display: flex; gap: 16px; flex-wrap: wrap; }
+  .btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 26px; border-radius: 2px; font-size: 13px; font-weight: 600; letter-spacing: 0.05em; text-decoration: none; transition: all 0.25s; border: none; cursor: pointer; }
+  .btn-primary { background: var(--accent); color: var(--navy); }
+  .btn-primary:hover { background: var(--accent-soft); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(74,158,255,0.35); }
+  .btn-outline { background: transparent; color: var(--accent); border: 1px solid var(--border-strong); }
+  .btn-outline:hover { background: var(--surface-hover); border-color: var(--accent); transform: translateY(-2px); }
+  .social-row { display: flex; gap: 14px; margin-top: 32px; }
+  .social-link { display: flex; align-items: center; justify-content: center; width: 38px; height: 38px; border: 1px solid var(--border); border-radius: 2px; color: var(--text-muted); text-decoration: none; transition: all 0.2s; background: var(--surface); }
+  .social-link:hover { border-color: var(--accent); color: var(--accent); background: var(--surface-hover); }
+  .hero-photo-wrap { flex-shrink: 0; }
+  .photo-frame { width: 280px; height: 340px; position: relative; }
+  .photo-frame::before { content: ''; position: absolute; inset: -12px; border: 1px solid var(--border); border-radius: 4px; z-index: 0; }
+  .photo-frame::after { content: ''; position: absolute; top: -6px; right: -6px; width: 60px; height: 60px; border-top: 2px solid var(--accent); border-right: 2px solid var(--accent); }
+  .photo-frame img { width: 100%; height: 100%; object-fit: cover; object-position: center top; border-radius: 3px; filter: saturate(0.85); position: relative; z-index: 1; display: block; }
+  .photo-corner { position: absolute; bottom: -6px; left: -6px; width: 60px; height: 60px; border-bottom: 2px solid var(--gold); border-left: 2px solid var(--gold); z-index: 2; }
+  .section-header { margin-bottom: 56px; }
+  .section-label { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--accent); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 12px; }
+  .section-title { font-family: 'DM Serif Display', serif; font-size: 38px; color: var(--text); line-height: 1.15; }
+  .section-line { width: 48px; height: 2px; background: linear-gradient(90deg, var(--accent), transparent); margin-top: 20px; }
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; }
+  .about-text p { font-size: 15px; color: var(--text-muted); margin-bottom: 18px; line-height: 1.85; }
+  .about-text p strong { color: var(--accent-soft); font-weight: 500; }
+  .about-stats { display: flex; flex-direction: column; gap: 20px; }
+  .stat-card { background: var(--surface); border: 1px solid var(--border); border-radius: 3px; padding: 22px 26px; transition: border-color 0.2s,background 0.2s; position: relative; overflow: hidden; }
+  .stat-card::before { content: ''; position: absolute; top: 0; left: 0; width: 2px; height: 100%; background: var(--accent); opacity: 0.4; }
+  .stat-card:hover { border-color: var(--border-strong); background: var(--surface-hover); }
+  .stat-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text-dim); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 6px; }
+  .stat-value { font-size: 14px; color: var(--text); }
+  .affil-row { display: flex; gap: 24px; margin-top: 32px; flex-wrap: wrap; }
+  .affil-card { background: var(--surface); border: 1px solid var(--border); border-radius: 3px; padding: 18px 24px; text-decoration: none; color: var(--text); transition: all 0.2s; flex: 1; min-width: 200px; }
+  .affil-card:hover { border-color: var(--accent); background: var(--surface-hover); transform: translateY(-3px); }
+  .affil-card-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--accent); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 6px; }
+  .affil-card-name { font-size: 13px; font-weight: 500; color: var(--text); line-height: 1.4; }
+  .affil-card-inst { font-size: 12px; color: var(--text-dim); margin-top: 4px; }
+  #research { background: rgba(10,22,50,0.4); }
+  .pub-list { display: flex; flex-direction: column; gap: 20px; }
+  .pub-item { background: var(--surface); border: 1px solid var(--border); border-radius: 3px; padding: 26px 30px; transition: all 0.25s; position: relative; overflow: hidden; }
+  .pub-item::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 2px; background: linear-gradient(90deg,var(--accent),transparent); opacity: 0; transition: opacity 0.3s; }
+  .pub-item:hover { border-color: var(--border-strong); background: var(--surface-hover); transform: translateX(4px); }
+  .pub-item:hover::after { opacity: 1; }
+  .pub-venue { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--accent); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px; display: flex; align-items: center; gap: 10px; }
+  .pub-venue .year { color: var(--gold); }
+  .pub-title { font-size: 15px; font-weight: 500; color: var(--text); line-height: 1.5; margin-bottom: 8px; }
+  .pub-authors { font-size: 13px; color: var(--text-dim); line-height: 1.5; }
+  .pub-authors strong { color: var(--text-muted); }
+  .tab-nav { display: flex; gap: 4px; margin-bottom: 32px; border-bottom: 1px solid var(--border); }
+  .tab-btn { font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; padding: 10px 20px; background: none; border: none; border-bottom: 2px solid transparent; color: var(--text-dim); cursor: pointer; transition: all 0.2s; margin-bottom: -1px; }
+  .tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+  .tab-btn:hover:not(.active) { color: var(--text-muted); }
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+  .pub-pagination { display: flex; align-items: center; gap: 10px; margin-top: 24px; }
+  .page-btn { font-family: 'JetBrains Mono', monospace; font-size: 12px; padding: 8px 16px; background: var(--surface); border: 1px solid var(--border); border-radius: 2px; color: var(--text-muted); cursor: pointer; transition: all 0.2s; }
+  .page-btn.active { background: var(--accent); color: var(--navy); border-color: var(--accent); font-weight: 600; }
+  .page-btn:hover:not(.active) { border-color: var(--accent); color: var(--accent); }
+  .page-scholar { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--accent); text-decoration: none; margin-left: auto; letter-spacing: 0.05em; opacity: 0.8; transition: opacity 0.2s; }
+  .page-scholar:hover { opacity: 1; }
+  .talks-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(320px,1fr)); gap: 20px; }
+  .talk-card { background: var(--surface); border: 1px solid var(--border); border-radius: 3px; padding: 26px; transition: all 0.25s; }
+  .talk-card:hover { border-color: var(--border-strong); background: var(--surface-hover); transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,0.3); }
+  .talk-year { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--gold); letter-spacing: 0.1em; margin-bottom: 10px; }
+  .talk-venue { font-size: 14px; font-weight: 600; color: var(--accent-soft); margin-bottom: 6px; }
+  .talk-location { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-dim); margin-bottom: 12px; }
+  .talk-title { font-size: 13px; color: var(--text-muted); line-height: 1.6; }
+  #skills { background: transparent; }
+  .skills-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; }
+  .skill-group { background: var(--surface); border: 1px solid var(--border); border-radius: 3px; padding: 26px; transition: border-color 0.2s; }
+  .skill-group:hover { border-color: var(--border-strong); }
+  .skill-group-title { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--accent); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 16px; }
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+  .skill-tag { font-family: 'JetBrains Mono', monospace; font-size: 11px; padding: 5px 10px; background: rgba(74,158,255,0.08); border: 1px solid var(--border); border-radius: 2px; color: var(--text-muted); }
+  #contact { background: rgba(10,22,50,0.4); text-align: center; }
+  #contact .section-header { text-align: center; }
+  #contact .section-line { margin: 20px auto 0; }
+  .contact-desc { font-size: 16px; color: var(--text-muted); max-width: 480px; margin: 0 auto 40px; line-height: 1.8; }
+  .contact-links { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
+  .contact-item { display: flex; align-items: center; gap: 10px; padding: 14px 24px; background: var(--surface); border: 1px solid var(--border); border-radius: 3px; text-decoration: none; color: var(--text-muted); font-size: 13px; font-family: 'JetBrains Mono', monospace; transition: all 0.2s; }
+  .contact-item:hover { border-color: var(--accent); color: var(--accent); background: var(--surface-hover); transform: translateY(-2px); }
+  footer { border-top: 1px solid var(--border); text-align: center; padding: 32px; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-dim); letter-spacing: 0.05em; }
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease,transform 0.6s ease; }
+  .reveal.visible { opacity: 1; transform: none; }
+  @media(max-width:768px){
+    nav{padding:16px 24px;} .nav-links{display:none;}
+    section{padding:80px 24px;}
+    #hero{flex-direction:column-reverse;gap:40px;padding-top:120px;}
+    .hero-photo-wrap{margin:0 auto;} .photo-frame{width:220px;height:270px;}
+    .about-grid{grid-template-columns:1fr;} .skills-grid{grid-template-columns:1fr 1fr;} .talks-grid{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#hero" class="nav-logo">amirali.farzin</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#research">Research</a></li>
+    <li><a href="#talks">Talks</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<section id="hero">
+  <div class="hero-text">
+    <div class="hero-tag">AI &amp; ML Researcher · Optimisation</div>
+    <h1 class="hero-name">Amir Ali<br><em>Farzin</em></h1>
+    <p class="hero-title">
+      PhD Candidate — Australian National University<br>
+      Visiting Researcher — University of Melbourne
+    </p>
+    <p class="hero-desc">
+      I am an AI developer and researcher with a focus on optimisation. I develop and analyse random and stochastic zeroth-order optimisation methods and saddle-point algorithms for large-scale and nonconvex systems, combining rigorous theoretical guarantees with scalable implementation for real-world ML and decision-making.
+    </p>
+    <div class="hero-buttons">
+      <a href="https://scholar.google.com/citations?user=mMfddjkAAAAJ&hl=en" target="_blank" class="btn btn-primary">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 24a7 7 0 1 1 0-14 7 7 0 0 1 0 14zm0-24L0 9.5l4.838 3.94A8 8 0 0 1 12 9a8 8 0 0 1 7.162 4.44L24 9.5z"/></svg>
+        Google Scholar
+      </a>
+      <a href="https://github.com/amirali78frz?tab=repositories" target="_blank" class="btn btn-outline">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+        GitHub
+      </a>
+      <a href="mailto:amirali.farzin@anu.edu.au" class="btn btn-outline">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        Email
+      </a>
+    </div>
+    <div class="social-row">
+      <a href="https://scholar.google.com/citations?user=mMfddjkAAAAJ&hl=en" target="_blank" class="social-link" title="Google Scholar">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 24a7 7 0 1 1 0-14 7 7 0 0 1 0 14zm0-24L0 9.5l4.838 3.94A8 8 0 0 1 12 9a8 8 0 0 1 7.162 4.44L24 9.5z"/></svg>
+      </a>
+      <a href="https://github.com/amirali78frz" target="_blank" class="social-link" title="GitHub">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+      </a>
+      <a href="https://www.linkedin.com" target="_blank" class="social-link" title="LinkedIn">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
+      </a>
+    </div>
+  </div>
+  <div class="hero-photo-wrap">
+    <div class="photo-frame">
+      <img src="photo.jpeg" alt="Amir Ali Farzin">
+      <div class="photo-corner"></div>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="reveal">
+    <div class="section-header">
+      <div class="section-label">// Background</div>
+      <h2 class="section-title">About Me</h2>
+      <div class="section-line"></div>
+    </div>
+  </div>
+  <div class="about-grid reveal">
+    <div class="about-text">
+      <p>I am a <strong>PhD candidate at the Australian National University</strong> (ANU), supervised by Prof. Iman Shames and Dr. Philipp Braun. Currently, I am also a <strong>visiting student and researcher at the University of Melbourne</strong>, Department of Electrical and Electronics Engineering.</p>
+      <p>My research focuses on developing <strong>stochastic and zeroth-order optimisation algorithms</strong> for AI and machine learning, with a particular emphasis on min-max problems, saddle point theory, and adversarial training for robust ML systems.</p>
+      <p>I am a member of both the <strong>CIICADA Lab</strong> at ANU — a research group advancing control, information, and autonomous systems — and the <strong>DINGO Lab</strong> at the University of Melbourne, where I work on stochastic optimisation methods for large-scale AI problems.</p>
+      <p>Before starting my PhD, I completed a B.S. in Mechanical Engineering at <strong>Sharif University of Technology</strong>, with a focus on automatic control systems.</p>
+      <div class="affil-row">
+        <a href="https://ciicadalab.github.io/" target="_blank" class="affil-card">
+          <div class="affil-card-label">Lab</div>
+          <div class="affil-card-name">CIICADA Lab</div>
+          <div class="affil-card-inst">Australian National University</div>
+        </a>
+        <a href="https://eemensch.github.io/#about" target="_blank" class="affil-card">
+          <div class="affil-card-label">Lab</div>
+          <div class="affil-card-name">DINGO Lab</div>
+          <div class="affil-card-inst">University of Melbourne</div>
+        </a>
+      </div>
+    </div>
+    <div class="about-stats">
+      <div class="stat-card">
+        <div class="stat-label">Current Position</div>
+        <div class="stat-value">PhD Candidate · ANU School of Engineering</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Visiting Appointment</div>
+        <div class="stat-value">Visiting Researcher · Dept. of Electrical &amp; Electronic Engineering, University of Melbourne</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">PhD Supervisors</div>
+        <div class="stat-value">Prof. Iman Shames · Dr. Philipp Braun</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Research Interests</div>
+        <div class="stat-value">Stochastic &amp; Zeroth-Order Optimisation · Min-Max AI · Saddle Point Theory · Robust ML</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Contact</div>
+        <div class="stat-value">amirali.farzin@anu.edu.au · amirali.farzin@unimelb.edu.au</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="research">
+  <div class="reveal">
+    <div class="section-header">
+      <div class="section-label">// Selected Work</div>
+      <h2 class="section-title">Research &amp; Publications</h2>
+      <div class="section-line"></div>
+    </div>
+  </div>
+  <div class="reveal">
+    <div class="tab-nav">
+      <button class="tab-btn active" data-tab="pubs">Publications</button>
+      <button class="tab-btn" data-tab="projects">Projects</button>
+    </div>
+    <div id="pubs" class="tab-panel active">
+      <div class="pub-list" id="pub-list-container">
+        <div class="pub-item" data-page="1">
+          <div class="pub-venue"><span>Transactions on Machine Learning Research</span><span class="year">2025</span></div>
+          <div class="pub-title">Min-max optimisation for nonconvex-nonconcave functions using a random stochastic zeroth-order extragradient algorithm</div>
+          <div class="pub-authors"><strong>A. A. Farzin</strong>, Y.-M. Pun, P. Braun, A. Lesage-Landry, Y. Diouane, I. Shames</div>
+        </div>
+        <div class="pub-item" data-page="1">
+          <div class="pub-venue"><span>IEEE Control Systems Letters (L-CSS)</span><span class="year">2025</span></div>
+          <div class="pub-title">Properties of Fixed Points of Generalised Extra Gradient Methods Applied to Min-Max Problems</div>
+          <div class="pub-authors"><strong>A. A. Farzin</strong>, Y.-M. Pun, P. Braun, I. Shames</div>
+        </div>
+        <div class="pub-item" data-page="1">
+          <div class="pub-venue"><span>IEEE European Control Conference (ECC)</span><span class="year">2024</span></div>
+          <div class="pub-title">Minimisation of Polyak-Łojasiewicz functions using random stochastic zeroth-order oracles</div>
+          <div class="pub-authors"><strong>A. A. Farzin</strong>, I. Shames</div>
+        </div>
+        <div class="pub-item" data-page="2">
+          <div class="pub-venue"><span>arXiv Preprint</span><span class="year">2026</span></div>
+          <div class="pub-title">Solving the Offline and Online Min-Max Problem of Non-smooth Submodular-Concave Functions: A Stochastic Zeroth-Order Approach</div>
+          <div class="pub-authors"><strong>A. A. Farzin</strong>, Y.-M. Pun, P. Braun, T. Summers, I. Shames · arXiv:2601.21243</div>
+        </div>
+        <div class="pub-item" data-page="2">
+          <div class="pub-venue"><span>arXiv Preprint</span><span class="year">2025</span></div>
+          <div class="pub-title">Minimisation of Submodular Functions using Stochastic Zeroth-Order Oracles</div>
+          <div class="pub-authors"><strong>A. A. Farzin</strong>, I. Shames</div>
+        </div>
+      </div>
+      <div class="pub-pagination">
+        <button class="page-btn active" data-page="1" onclick="setPubPage(1)">1</button>
+        <button class="page-btn" data-page="2" onclick="setPubPage(2)">2</button>
+        <a href="https://scholar.google.com/citations?user=mMfddjkAAAAJ&hl=en" target="_blank" class="page-scholar">View all on Google Scholar &rarr;</a>
+      </div>
+    </div>
+    <div id="projects" class="tab-panel">
+      <div class="pub-list">
+        <div class="pub-item">
+          <div class="pub-venue"><span>Zeroth-Order Optimisation</span><span class="year">Ongoing</span></div>
+          <div class="pub-title">No extra dimension dependence for ZO counterparts of first-order algorithms</div>
+          <div class="pub-authors">Analysing the conditions under which ZO algorithms can be formulated as bounded perturbed dynamical systems of their FO counterparts, to determine when they incur no extra dimension dependence — with direct implications for stochastic AI and ML at scale.</div>
+        </div>
+        <div class="pub-item">
+          <div class="pub-venue"><span>Zeroth-Order Minimisation</span></div>
+          <div class="pub-title">Quasar-convex, Polyak-Łojasiewicz, and Submodular Function Minimisation</div>
+          <div class="pub-authors">Developing convergence guarantees for minimisation of structured nonconvex functions using stochastic gradient-free oracles, with applications to ML training pipelines.</div>
+        </div>
+        <div class="pub-item">
+          <div class="pub-venue"><span>Min-Max Optimisation</span></div>
+          <div class="pub-title">Nonconvex-Nonconcave and Submodular-Concave Min-Max via Stochastic Zeroth-Order Methods</div>
+          <div class="pub-authors">Designing practical stochastic zeroth-order extragradient algorithms with theoretical convergence guarantees for adversarial and robust AI/ML scenarios.</div>
+        </div>
+        <div class="pub-item">
+          <div class="pub-venue"><span>Saddle Point Theory</span></div>
+          <div class="pub-title">Fixed Points, Continuous Flows, and Convergence to Saddle Points</div>
+          <div class="pub-authors">Building a unified framework linking discrete-time minimax algorithms to continuous-time dynamical systems, with guarantees of convergence only to saddle points — foundational for stochastic ML training stability.</div>
+        </div>
+        <div class="pub-item">
+          <div class="pub-venue"><span>Raceline Optimisation · Ongoing</span></div>
+          <div class="pub-title">ML-Based Raceline Generation for Autonomous Racing</div>
+          <div class="pub-authors">Developing a Python package and dataset for raceline optimisation; training neural networks to predict optimal velocity profiles from track map inputs. Ranked 5th in F1TENTH Sim Racing League at CDC 2024.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="talks">
+  <div class="reveal">
+    <div class="section-header">
+      <div class="section-label">// Presentations</div>
+      <h2 class="section-title">Talks &amp; Conferences</h2>
+      <div class="section-line"></div>
+    </div>
+  </div>
+  <div class="talks-grid reveal">
+    <div class="talk-card">
+      <div class="talk-year">2025</div>
+      <div class="talk-venue">University of Melbourne</div>
+      <div class="talk-location">Melbourne, Australia</div>
+      <div class="talk-title">Invited talk — Stochastic zeroth-order min-max optimisation for nonconvex-nonconcave functions</div>
+    </div>
+    <div class="talk-card">
+      <div class="talk-year">2025</div>
+      <div class="talk-venue">University of Sydney</div>
+      <div class="talk-location">Sydney, Australia</div>
+      <div class="talk-title">Invited talk — Random zeroth-order extragradient methods for nonconvex-nonconcave AI problems</div>
+    </div>
+    <div class="talk-card">
+      <div class="talk-year">2025</div>
+      <div class="talk-venue">IEEE CDC</div>
+      <div class="talk-location">Rio de Janeiro, Brazil</div>
+      <div class="talk-title">Properties of fixed points of generalised extragradient methods applied to min-max problems</div>
+    </div>
+    <div class="talk-card">
+      <div class="talk-year">2025</div>
+      <div class="talk-venue">Optimisation Days at UNSW</div>
+      <div class="talk-location">Sydney, Australia</div>
+      <div class="talk-title">Stochastic saddle-point algorithms and fixed-point properties of extragradient methods</div>
+    </div>
+    <div class="talk-card">
+      <div class="talk-year">2024</div>
+      <div class="talk-venue">IEEE ECC</div>
+      <div class="talk-location">Stockholm, Sweden</div>
+      <div class="talk-title">Contributed talk — Minimisation of Polyak-Łojasiewicz functions using stochastic zeroth-order oracles</div>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="reveal">
+    <div class="section-header">
+      <div class="section-label">// Technical</div>
+      <h2 class="section-title">Skills</h2>
+      <div class="section-line"></div>
+    </div>
+  </div>
+  <div class="skills-grid reveal">
+    <div class="skill-group">
+      <div class="skill-group-title">Languages</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Python</span>
+        <span class="skill-tag">MATLAB</span>
+        <span class="skill-tag">C++</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-title">AI / ML Frameworks</div>
+      <div class="skill-tags">
+        <span class="skill-tag">PyTorch</span>
+        <span class="skill-tag">TensorFlow</span>
+        <span class="skill-tag">JAX</span>
+        <span class="skill-tag">OpenCV</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-title">Tools</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Simulink</span>
+        <span class="skill-tag">SOLIDWORKS</span>
+        <span class="skill-tag">Arduino</span>
+        <span class="skill-tag">Git</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-title">Research Areas</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Stochastic Opt.</span>
+        <span class="skill-tag">Zeroth-Order Opt.</span>
+        <span class="skill-tag">Min-Max / AI</span>
+        <span class="skill-tag">Saddle Points</span>
+        <span class="skill-tag">Robust ML</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-title">Reviewing</div>
+      <div class="skill-tags">
+        <span class="skill-tag">ICML</span>
+        <span class="skill-tag">IEEE TAC</span>
+        <span class="skill-tag">IEEE TCNS</span>
+        <span class="skill-tag">L-CSS</span>
+        <span class="skill-tag">CDC</span>
+        <span class="skill-tag">ECC</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-title">Teaching</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Control Systems</span>
+        <span class="skill-tag">System Dynamics</span>
+        <span class="skill-tag">Automatic Control</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="reveal">
+    <div class="section-header">
+      <div class="section-label">// Get in Touch</div>
+      <h2 class="section-title">Contact</h2>
+      <div class="section-line"></div>
+    </div>
+  </div>
+  <p class="contact-desc reveal">I'm happy to discuss research collaborations, visiting opportunities, or questions about my AI and ML optimisation work.</p>
+  <div class="contact-links reveal">
+    <a href="mailto:amirali.farzin@anu.edu.au" class="contact-item">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+      amirali.farzin@anu.edu.au
+    </a>
+    <a href="mailto:amirali.farzin@unimelb.edu.au" class="contact-item">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+      amirali.farzin@unimelb.edu.au
+    </a>
+    <a href="https://github.com/amirali78frz" target="_blank" class="contact-item">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+      github.com/amirali78frz
+    </a>
+    <a href="https://scholar.google.com/citations?user=mMfddjkAAAAJ&hl=en" target="_blank" class="contact-item">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 24a7 7 0 1 1 0-14 7 7 0 0 1 0 14zm0-24L0 9.5l4.838 3.94A8 8 0 0 1 12 9a8 8 0 0 1 7.162 4.44L24 9.5z"/></svg>
+      Google Scholar
+    </a>
+  </div>
+</section>
+
+<footer>
+  <span>Amir Ali Farzin &middot; PhD Candidate, ANU &middot; Visiting Researcher, University of Melbourne</span>
+</footer>
+
+<script>
+  function setPubPage(page) {
+    document.querySelectorAll('#pub-list-container .pub-item').forEach(function(item) {
+      item.style.display = parseInt(item.getAttribute('data-page') || '1') === page ? '' : 'none';
+    });
+    document.querySelectorAll('.page-btn').forEach(function(btn) {
+      btn.classList.toggle('active', parseInt(btn.getAttribute('data-page')) === page);
+    });
+  }
+  setPubPage(1);
+
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+    });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(function(el) { observer.observe(el); });
+
+  document.querySelectorAll('.tab-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('.tab-btn').forEach(function(b) { b.classList.remove('active'); });
+      document.querySelectorAll('.tab-panel').forEach(function(p) { p.classList.remove('active'); });
+      btn.classList.add('active');
+      document.getElementById(btn.getAttribute('data-tab')).classList.add('active');
+    });
+  });
+
+  window.addEventListener('scroll', function() {
+    document.querySelector('nav').style.background = window.scrollY > 50 ? 'rgba(4,10,22,0.95)' : 'rgba(6,14,31,0.82)';
+  });
+</script>
+
+</body>
+</html>
