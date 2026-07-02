@@ -104,6 +104,16 @@
   .pub-title { font-size: 15px; font-weight: 500; color: var(--text); line-height: 1.5; margin-bottom: 8px; }
   .pub-authors { font-size: 13px; color: var(--text-dim); line-height: 1.5; }
   .pub-authors strong { color: var(--text-muted); }
+  .pub-link {
+  margin-left: 10px;
+  color: #7abfff;
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: color 0.2s ease;}
+  .pub-link:hover {
+  color: #a8d4ff;
+  text-decoration: underline;}
   .tab-nav { display: flex; gap: 4px; margin-bottom: 32px; border-bottom: 1px solid var(--border); }
   .tab-btn { font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; padding: 10px 20px; background: none; border: none; border-bottom: 2px solid transparent; color: var(--text-dim); cursor: pointer; transition: all 0.2s; margin-bottom: -1px; }
   .tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
@@ -343,14 +353,16 @@
           <div class="pub-authors">Building a unified framework linking discrete-time minimax algorithms to continuous-time dynamical systems, with guarantees of convergence only to saddle points — foundational for stochastic ML training stability.</div>
         </div>
         <div class="pub-item">
-        <div class="pub-venue"><span>Raceline Optimisation · Ongoing</span></div>
-        <div class="pub-title"> Raceline Generation for Autonomous Racing
-        <a href="https://github.com/amirali78frz/OptiLine"
+  <div class="pub-venue"><span>Raceline Optimisation · Ongoing</span></div>
+  <div class="pub-title"> Raceline Generation for Autonomous Racing
+    <a href="https://github.com/amirali78frz/OptiLine"
        target="_blank"
        rel="noopener noreferrer"
-       class="pub-link">GitHub ↗</a>
-      </div>
-      <div class="pub-authors"> Developing a Python package and dataset for raceline optimisation; training neural networks to predict optimal velocity profiles from track map inputs. Ranked 5th in F1TENTH Sim Racing League at CDC 2024.</div>
+       class="pub-link">
+      GitHub ↗
+    </a></div>
+  <div class="pub-authors">Developing a Python package and dataset for raceline optimisation; training neural networks to predict optimal velocity profiles from track map inputs. Ranked 5th in F1TENTH Sim Racing League at CDC 2024.</div>
+</div>
 </div>
       </div>
     </div>
